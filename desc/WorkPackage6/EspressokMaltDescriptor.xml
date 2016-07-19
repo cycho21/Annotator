@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>  
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="EspressokDescriptor">
+      <import location="EspressokDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="MaltDescriptor">
+      <import location="MaltDescriptor.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>EspressokMaltDescriptor</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+        <node>EspressokDescriptor</node>
+        <node>MaltDescriptor</node>
+      </fixedFlow>
+    </flowConstraints>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type>kr.ac.uos.ai.uimaTest.casType.WP6Annotation</type>
+          <feature>kr.ac.uos.ai.uimaTest.casType.WP6Annotation:Malt</feature>
+          <feature>kr.ac.uos.ai.uimaTest.casType.WP6Annotation:Espressok</feature>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+  <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

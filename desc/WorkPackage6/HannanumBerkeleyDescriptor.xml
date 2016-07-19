@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>  
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="HannanumDescriptor">
+      <import location="HannanumDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="BerkeleyDescriptor">
+      <import location="BerkeleyDescriptor.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>HannanumBerkeleyDescriptor</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+        <node>HannanumDescriptor</node>
+        <node>BerkeleyDescriptor</node>
+      </fixedFlow>
+    </flowConstraints>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type>kr.ac.uos.ai.uimaTest.casType.WP6Annotation</type>
+          <feature>kr.ac.uos.ai.uimaTest.casType.WP6Annotation:Berkeley</feature>
+          <feature>kr.ac.uos.ai.uimaTest.casType.WP6Annotation:Hannanum</feature>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+  <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDeploymentDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>FullDeployDescriptor</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <deployment protocol="jms" provider="activemq">
+    <casPool numberOfCASes="5" initialFsHeapSize="2000000"/>
+    <service>
+      <inputQueue endpoint="data" brokerURL="tcp://localhost:61616" prefetch="0"/>
+      <topDescriptor>
+<import location="FullAggregationDescriptor.xml"/>
+      </topDescriptor>
+      <analysisEngine async="true" inputQueueScaleout="1" internalReplyQueueScaleout="1">
+        <scaleout numberOfInstances="1"/>
+        <delegates>
+          <analysisEngine key="EspressokDescriptor" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="HannanumDescriptor" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="KnpDescriptor" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="BerkeleyDescriptor" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="MaltDescriptor" async="false">
+            <scaleout numberOfInstances="5"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+        </delegates>
+        <asyncPrimitiveErrorConfiguration>
+          <processCasErrors thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+          <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+        </asyncPrimitiveErrorConfiguration>
+      </analysisEngine>
+    </service>
+  </deployment>
+</analysisEngineDeploymentDescription>

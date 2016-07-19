@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDeploymentDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>DummyWP6Deployment</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <deployment protocol="jms" provider="activemq">
+    <casPool numberOfCASes="20" initialFsHeapSize="2000000"/>
+    <service>
+      <inputQueue endpoint="DummyWP6" brokerURL="tcp://211.109.9.71:61616" prefetch="0"/>
+      <topDescriptor>
+<import location="FullWP6AE.xml"/>
+      </topDescriptor>
+      <analysisEngine async="true" inputQueueScaleout="1" internalReplyQueueScaleout="1">
+        <scaleout numberOfInstances="1"/>
+        <delegates>
+          <analysisEngine key="NLP2RDFAnnotator" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <remoteAnalysisEngine key="L2KAnnotator">
+            <inputQueue brokerURL="tcp://211.109.9.71:61616" endpoint="L2K"/>
+            <serializer method="xmi"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="60000" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </remoteAnalysisEngine>
+          <analysisEngine key="DisambiguationAnnotator" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="B_BoxAnnotator" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+          <analysisEngine key="V_BoxAnnotator" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+        </delegates>
+        <asyncPrimitiveErrorConfiguration>
+          <processCasErrors thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+          <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+        </asyncPrimitiveErrorConfiguration>
+      </analysisEngine>
+    </service>
+  </deployment>
+</analysisEngineDeploymentDescription>

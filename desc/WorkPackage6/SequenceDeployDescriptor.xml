@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><analysisEngineDeploymentDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>SequenceDeployDescriptor</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <deployment protocol="jms" provider="activemq">
+    <casPool numberOfCASes="5" initialFsHeapSize="2000000"/>
+    <service>
+      <inputQueue endpoint="sequence" brokerURL="tcp://172.16.165.108:61616" prefetch="0"/>
+      <topDescriptor>
+<import location="SequentialDescriptor.xml"/>
+      </topDescriptor>
+      <analysisEngine async="true" inputQueueScaleout="5" internalReplyQueueScaleout="5">
+        <scaleout numberOfInstances="1"/>
+        <delegates>
+          <remoteAnalysisEngine key="FullAggregationDescriptor" remoteReplyQueueScaleout="10">
+            <inputQueue brokerURL="tcp://localhost:61616" endpoint="data"/>
+            <serializer method="xmi"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="60000" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </remoteAnalysisEngine>
+          <analysisEngine key="SplitDescriptor" async="false">
+            <scaleout numberOfInstances="1"/>
+            <asyncAggregateErrorConfiguration>
+              <getMetadataErrors maxRetries="0" timeout="0" errorAction="terminate"/>
+              <processCasErrors maxRetries="0" timeout="0" continueOnRetryFailure="false" thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+              <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+            </asyncAggregateErrorConfiguration>
+          </analysisEngine>
+        </delegates>
+        <asyncPrimitiveErrorConfiguration>
+          <processCasErrors thresholdCount="0" thresholdWindow="0" thresholdAction="terminate"/>
+          <collectionProcessCompleteErrors timeout="0" additionalErrorAction="terminate"/>
+        </asyncPrimitiveErrorConfiguration>
+      </analysisEngine>
+    </service>
+  </deployment>
+</analysisEngineDeploymentDescription>
