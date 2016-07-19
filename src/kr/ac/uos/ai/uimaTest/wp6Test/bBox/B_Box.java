@@ -22,6 +22,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.openkb.bbox.BBoxAction;
 
 import activemq.Receiver;
+import activemq.ResourceMonitor;
+import activemq.Sender;
 import enumType.AnnotatorType;
 import enumType.ProcessType;
 
@@ -32,6 +34,14 @@ public class B_Box extends Log4Anno {
 	private final String HOME									= System.getenv("HOME");
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
+			
+		Sender sender = new Sender();
+		sender.init();
+		sender.createQueue("main");
+		
+		ResourceMonitor resourceMonitor = new ResourceMonitor();
+		resourceMonitor.init();
+			
 		try {
 			WP6Cas bboxAnno = new WP6Cas(cas);
 			PropertyConfigurator.configure(HOME+"/log4j.properties");

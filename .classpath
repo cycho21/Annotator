@@ -77,6 +77,6 @@
 	<classpathentry kind="lib" path="F:/uima-as-2.6.0-bin/apache-uima-as-2.6.0/lib/uimaj-bootstrap.jar"/>
 	<classpathentry kind="lib" path="F:/uima-as-2.6.0-bin/apache-uima-as-2.6.0/lib/uima-tools.jar"/>
 	<classpathentry kind="lib" path="F:/uima-as-2.6.0-bin/apache-uima-as-2.6.0/lib/xmlbeans.jar"/>
-	<classpathentry kind="lib" path="F:/Sigar/hyperic-sigar-1.6.4/hyperic-sigar-1.6.4/sigar-bin/lib/sigar.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HentaiMaster/Documents/SpringWorkspace/node-manager/sigar-1.6.4/sigar.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

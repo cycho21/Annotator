@@ -6,6 +6,7 @@ import org.apache.uima.aae.client.UimaAsynchronousEngine;
 import org.apache.uima.adapter.jms.client.BaseUIMAAsynchronousEngine_impl;
 
 import activemq.Receiver;
+import activemq.Sender;
 
 public class RunAnnotator {
 	private final UimaAsynchronousEngine						uimaEngine;
@@ -20,6 +21,8 @@ public class RunAnnotator {
 		init();
 	}
 	
+	
+
 	private void init() {
 		applicationSetting.put(UimaAsynchronousEngine.DD2SpringXsltFilePath, UIMA_HOME+"/bin/dd2spring.xsl");
 		applicationSetting.put(UimaAsynchronousEngine.SaxonClasspath, "file:" + UIMA_HOME+"/saxon/saxon8.jar");
