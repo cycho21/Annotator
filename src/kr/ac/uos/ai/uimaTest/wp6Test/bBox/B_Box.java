@@ -141,10 +141,15 @@ public class B_Box extends Log4Anno {
 			bboxAnno.addToIndexes();
 
 			
-				logger.info("CollectionReader:collectionReaderDescriptor" + "|"
-						+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:BBOX"
-						+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
-			
+			logger.info("CollectionReader:collectionReaderDescriptor" + "|"
+					+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:BBOX"
+					+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+				
+			sender.returnMessage("CollectionReader:collectionReaderDescriptor" + "|"
+					+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:BBOX"
+					+ "|" + "CPU:" + resourceMonitor.getFreeCpu() + "|" + "MEM:" + resourceMonitor.getFreeMem() 
+					+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+				
 
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

@@ -24,6 +24,8 @@ import org.apache.uima.jcas.cas.IntegerArray;
 import org.apache.uima.jcas.tcas.Annotation;
 
 import activemq.Receiver;
+import activemq.ResourceMonitor;
+import activemq.Sender;
 import enumType.AnnotatorType;
 import enumType.ProcessType;
 
@@ -48,7 +50,14 @@ public class Disambiguation extends Log4Anno{
 				String ipAdrs = ip.getHostAddress();
 			 
 			 init();
-				
+			 
+		    Sender sender = new Sender();
+			sender.init();
+			sender.createQueue("main");
+			
+			ResourceMonitor resourceMonitor = new ResourceMonitor();
+			resourceMonitor.init();
+			
 			 disamAnno.setStartTime(System.currentTimeMillis());
 			 disamAnno.setProcessName(Disambiguation);
 			 
@@ -121,6 +130,11 @@ public class Disambiguation extends Log4Anno{
 	       	 
 					logger.info("CollectionReader:collectionReaderDescriptor" + "|"
 							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:DISAMBIGUATION"
+							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+					
+					sender.returnMessage("CollectionReader:collectionReaderDescriptor" + "|"
+							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:DISAMBIGUATION"
+							+ "|" + "CPU:" + resourceMonitor.getFreeCpu() + "|" + "MEM:" + resourceMonitor.getFreeMem() 
 							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
 				
 	       	 

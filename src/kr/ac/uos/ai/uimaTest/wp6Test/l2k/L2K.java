@@ -25,6 +25,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.openkb.l2k.L2KAction;
 
 import activemq.Receiver;
+import activemq.ResourceMonitor;
+import activemq.Sender;
 import enumType.AnnotatorType;
 import enumType.ProcessType;
 
@@ -49,6 +51,13 @@ public class L2K extends Log4Anno {
 				String ipAdrs = ip.getHostAddress();
 			 
 			 init();
+			 
+			Sender sender = new Sender();
+			sender.init();
+			sender.createQueue("main");
+			
+			ResourceMonitor resourceMonitor = new ResourceMonitor();
+			resourceMonitor.init();
 				
 			 l2kAnno.setStartTime(System.currentTimeMillis());
 			 l2kAnno.setProcessName(L2K);
@@ -121,6 +130,11 @@ public class L2K extends Log4Anno {
 	       	 
 					logger.info("CollectionReader:collectionReaderDescriptor" + "|"
 							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:L2K"
+							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+					
+					sender.returnMessage("CollectionReader:collectionReaderDescriptor" + "|"
+							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:L2K"
+							+ "|" + "CPU:" + resourceMonitor.getFreeCpu() + "|" + "MEM:" + resourceMonitor.getFreeMem() 
 							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
 					
 	       	  	

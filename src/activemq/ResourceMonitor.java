@@ -1,7 +1,10 @@
 package activemq;
 
-import org.hyperic.sigar.*;
-import org.junit.Test;
+import org.hyperic.sigar.CpuInfo;
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.ProcCpu;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 
 /**
  * @author Chan Yeon, Cho
@@ -47,11 +50,23 @@ public class ResourceMonitor {
     	try {
 			tempString = String.valueOf(sigar.getMem().getFreePercent());
 		} catch (SigarException e) {
+			e.printStackTrace();
+		}
+    	return tempString;
+    }
+    
+    public String getFreeCpu() {
+    	String tempString = null;
+    	try {
+			tempString = String.valueOf(sigar.getCpuPerc().getIdle()*100);
+		} catch (SigarException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return tempString;
     }
+    
+    
     
     public void getCpuUsageByPID(String pid){
         while (true) {

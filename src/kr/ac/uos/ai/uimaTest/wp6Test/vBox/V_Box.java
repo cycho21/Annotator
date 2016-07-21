@@ -28,6 +28,8 @@ import org.openkb.l2k.L2KAction;
 import org.openkb.vbox.VBoxAction;
 
 import activemq.Receiver;
+import activemq.ResourceMonitor;
+import activemq.Sender;
 import enumType.AnnotatorType;
 import enumType.ProcessType;
 
@@ -53,6 +55,13 @@ public class V_Box extends Log4Anno {
 			 
 			 init();
 				
+			Sender sender = new Sender();
+			sender.init();
+			sender.createQueue("main");
+			
+			ResourceMonitor resourceMonitor = new ResourceMonitor();
+			resourceMonitor.init();
+			 
 			 vboxAnno.setStartTime(System.currentTimeMillis());
 			 vboxAnno.setProcessName(VBox);
 			 
@@ -122,9 +131,12 @@ public class V_Box extends Log4Anno {
 					logger.info("CollectionReader:collectionReaderDescriptor" + "|"
 							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:VBOX"
 							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+					
+					sender.returnMessage("CollectionReader:collectionReaderDescriptor" + "|"
+							+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:VBOX"
+							+ "|" + "CPU:" + resourceMonitor.getFreeCpu() + "|" + "MEM:" + resourceMonitor.getFreeMem() 
+							+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
 	 	
-	       	  	
-	       	 
 		 } catch (IOException ioe) {
 			 ioe.printStackTrace();
 		 } catch (Exception e) {

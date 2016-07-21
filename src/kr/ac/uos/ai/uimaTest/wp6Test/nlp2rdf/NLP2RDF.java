@@ -21,6 +21,7 @@ import org.apache.uima.jcas.cas.IntegerArray;
 import enumType.AnnotatorType;
 import enumType.ProcessType;
 import activemq.Receiver;
+import activemq.ResourceMonitor;
 import activemq.Sender;
 
 public class NLP2RDF extends Log4Anno {
@@ -28,6 +29,7 @@ public class NLP2RDF extends Log4Anno {
 	private String text;
 	private final Logger logger = Logger.getLogger(NLP2RDF.class);
 	private final String HOME									= System.getenv("HOME");
+	
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		try {
@@ -44,6 +46,13 @@ public class NLP2RDF extends Log4Anno {
 			String ipAdrs = ip.getHostAddress();
 			
 			init();
+			
+			Sender sender = new Sender();
+			sender.init();
+			sender.createQueue("main");
+			
+			ResourceMonitor resourceMonitor = new ResourceMonitor();
+			resourceMonitor.init();
 
 			anno.setProcessName("NLP2RDF");
 			anno.setStartTime(System.currentTimeMillis());
@@ -89,6 +98,11 @@ public class NLP2RDF extends Log4Anno {
 			
 				logger.info("CollectionReader:collectionReaderDescriptor" + "|"
 						+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:NLP2RDF"
+						+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
+				
+				sender.returnMessage("CollectionReader:collectionReaderDescriptor" + "|"
+						+ "PID:" + pid + "|" + "IP:" + ipAdrs + "|" + "AnnotatorType:NLP2RDF"
+						+ "|" + "CPU:" + resourceMonitor.getFreeCpu() + "|" + "MEM:" + resourceMonitor.getFreeMem() 
 						+ "|" + "ProcessType:DONE" + "|" + "Data:" + text);
 					
 
